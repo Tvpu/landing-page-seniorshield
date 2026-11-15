@@ -41,18 +41,19 @@
 
 <hr>
 
-<!-- seccion 1 simulador -->
-<section id="simulador">
-<h2>Simulador de alertas</h2>
-<p>Escribe un mensaje para conocer cómo se presentaría una advertencia de seguridad.</p>
-<form action="#" method="get">
-<label for="mensaje-sms">Mensaje SMS:</label><br>
-<input type="text" id="mensaje-sms" name="mensaje-sms">
-<button type="button">Probar SMS</button>
-</form>
-<p>El resultado del análisis aparecerá aquí.</p>
-</section>
-
+<!-- Sección 1 Simulador de Alertas -->
+<div class="simulador-alertas">
+    <h3>Simulador de Mensajes</h3>
+    <p>Pega un mensaje de texto para comprobar si es seguro.</p>
+    
+    <form id="simuladorForm">
+        <label for="mensajeInput">Mensaje recibido:</label>
+        <input type="text" id="mensajeInput" placeholder="Ej: Paquete retenido, ingresa al link..." required />
+        <button type="submit">Analizar Alerta</button>
+    </form>
+    
+    <p id="resultadoDOM"></p>
+</div>
 <hr>
 
 <!-- seccion 2 testimonios -->
@@ -124,7 +125,7 @@
 </main>
 
 <hr>
-
+    
 <!-- PIE DE PAGINA -->
 <footer>
 <img src="images/servicios.jpg" alt="foto 2" width="120">
