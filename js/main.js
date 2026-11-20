@@ -1,3 +1,10 @@
+// Utilidad para mensajes de estado accesibles (evita colores inline rotos en alto contraste)
+function mostrarEstado(elemento, texto, tipo) {
+  elemento.textContent = texto;
+  elemento.classList.remove('estado-error', 'estado-ok', 'estado-aviso', 'estado-info');
+  if (tipo) elemento.classList.add(`estado-${tipo}`);
+}
+
 // ---------- 1. MENÚ HAMBURGUESA (HU-039) Y ALTO CONTRASTE (HU-026) ----------
 const btnMenu = document.getElementById('btnMenu');
 const navPrincipal = document.getElementById('navPrincipal');
@@ -20,7 +27,7 @@ btnContraste.addEventListener('click', () => {
   btnContraste.setAttribute('aria-pressed', activo);
 });
 
-// ---------- 2. REGISTRO DE USUARIOS AL INICIO (HU-001, HU-003) ----------
+// ---------- 2. REGISTRO DE USUARIOS EN HERO (HU-001, HU-003) ----------
 const registroForm = document.getElementById('registroForm');
 const registroMensaje = document.getElementById('registroMensaje');
 
@@ -35,28 +42,23 @@ registroForm.addEventListener('submit', (e) => {
   const celularValido = /^\d{9}$/.test(celular);
 
   if (!nombre || !correo || !celular || !password) {
-    registroMensaje.textContent = 'Completa todos los campos obligatorios.';
-    registroMensaje.style.color = '#D32F2F';
+    mostrarEstado(registroMensaje, 'Completa todos los campos obligatorios.', 'error');
     return;
   }
   if (!emailValido) {
-    registroMensaje.textContent = 'Ingresa un correo electrónico válido.';
-    registroMensaje.style.color = '#D32F2F';
+    mostrarEstado(registroMensaje, 'Ingresa un correo electrónico válido.', 'error');
     return;
   }
   if (!celularValido) {
-    registroMensaje.textContent = 'El celular debe tener exactamente 9 dígitos numéricos.';
-    registroMensaje.style.color = '#D32F2F';
+    mostrarEstado(registroMensaje, 'El celular debe tener exactamente 9 dígitos numéricos.', 'error');
     return;
   }
   if (password.length < 6) {
-    registroMensaje.textContent = 'La contraseña debe tener al menos 6 caracteres.';
-    registroMensaje.style.color = '#D32F2F';
+    mostrarEstado(registroMensaje, 'La contraseña debe tener al menos 6 caracteres.', 'error');
     return;
   }
 
-  registroMensaje.textContent = `¡Registro exitoso, ${nombre}! Tu cuenta de SeniorShield está lista.`;
-  registroMensaje.style.color = '#388E3C';
+  mostrarEstado(registroMensaje, `¡Registro exitoso, ${nombre}! Tu cuenta de SeniorShield está lista.`, 'ok');
   registroForm.reset();
 });
 
@@ -101,7 +103,7 @@ function analizarMensaje(textoOriginal) {
   if (!textoOriginal) return;
 
   tarjetaDiag.classList.add('oculto');
-  diagFeedback.textContent = '';
+  mostrarEstado(diagFeedback, '', '');
   estadoCarga.classList.remove('oculto');
 
   setTimeout(() => {
@@ -159,7 +161,6 @@ document.querySelectorAll('.btn-chip').forEach(btn => {
   });
 });
 
-// Envío manual del formulario
 simuladorForm.addEventListener('submit', (e) => {
   e.preventDefault();
   analizarMensaje(mensajeInput.value.trim());
@@ -171,28 +172,49 @@ function renderHistorialAdulto() {
   `).join('');
 }
 
-// Barrera contra pulsaciones accidentales en enlaces rojos (HU-013)
+// ---------- MODALES ACCESIBLES (HU-013, HU-014, HU-037) ----------
+let focoPrevio = null;
+
+function abrirModal(modal, botonFoco) {
+  focoPrevio = document.activeElement;
+  modal.classList.remove('oculto');
+  if (botonFoco) botonFoco.focus();
+}
+
+function cerrarModal(modal) {
+  modal.classList.add('oculto');
+  if (focoPrevio) focoPrevio.focus();
+}
+
+// Barrera contra enlaces rojos (HU-013: requiere clic explícito, no cierra por fuera)
 const modalEnlace = document.getElementById('modalEnlace');
-btnSimularLink.addEventListener('click', () => modalEnlace.classList.remove('oculto'));
-document.getElementById('btnCancelarEnlace').addEventListener('click', () => modalEnlace.classList.add('oculto'));
+const btnCancelarEnlace = document.getElementById('btnCancelarEnlace');
+btnSimularLink.addEventListener('click', () => abrirModal(modalEnlace, btnCancelarEnlace));
+btnCancelarEnlace.addEventListener('click', () => cerrarModal(modalEnlace));
 document.getElementById('btnEntiendoRiesgo').addEventListener('click', () => {
-  modalEnlace.classList.add('oculto');
-  diagFeedback.textContent = 'Confirmación manual registrada. Recuerda nunca ingresar claves.';
+  cerrarModal(modalEnlace);
+  mostrarEstado(diagFeedback, 'Confirmación manual registrada. Recuerda nunca ingresar claves.', 'aviso');
 });
 
-// Eliminación segura (HU-014)
+// Eliminación segura con modal accesible (HU-014)
+const modalEliminar = document.getElementById('modalEliminar');
+const btnCancelarEliminar = document.getElementById('btnCancelarEliminar');
 document.getElementById('btnEliminarSeguro').addEventListener('click', () => {
-  if (confirm('¿Está seguro de borrar este mensaje?')) {
-    mensajeInput.value = '';
-    tarjetaDiag.classList.add('oculto');
-    btnSimularLink.classList.add('oculto');
-    alert('La amenaza fue borrada de forma segura.');
-  }
+  abrirModal(modalEliminar, btnCancelarEliminar);
+});
+btnCancelarEliminar.addEventListener('click', () => cerrarModal(modalEliminar));
+document.getElementById('btnConfirmarEliminar').addEventListener('click', () => {
+  cerrarModal(modalEliminar);
+  mensajeInput.value = '';
+  tarjetaDiag.classList.add('oculto');
+  btnSimularLink.classList.add('oculto');
+  respuestaFamiliarBox.textContent = 'La amenaza fue borrada de forma segura.';
+  respuestaFamiliarBox.classList.remove('oculto');
 });
 
 // Reportar falso positivo (HU-031)
 document.getElementById('btnReportarFalso').addEventListener('click', () => {
-  diagFeedback.textContent = 'Gracias por tu reporte anónimo. Ayudarás a mejorar el sistema.';
+  mostrarEstado(diagFeedback, 'Gracias por tu reporte anónimo. Ayudarás a mejorar el sistema.', 'ok');
 });
 
 // ---------- 5. MODO FAMILIAR SUPERVISOR (HU-018 a HU-024) ----------
@@ -209,8 +231,7 @@ document.getElementById('btnConsultarFamiliar').addEventListener('click', () => 
     estado: 'Pendiente',
     respuesta: ''
   });
-  diagFeedback.textContent = 'Consulta enviada. Cambia a "Modo Supervisor" arriba para responder.';
-  diagFeedback.style.color = '#1A365D';
+  mostrarEstado(diagFeedback, 'Consulta enviada. Cambia a "Modo Supervisor" arriba para responder.', 'info');
   renderAlertasSupervisor();
 });
 
@@ -236,7 +257,7 @@ function renderAlertasSupervisor() {
   listaAlertasSupervisor.innerHTML = filtradas.map(a => `
     <div class="alerta-item ${a.nivel === 'rojo' ? 'critica' : ''}">
       <p><strong>Estado:</strong> ${a.estado} | <strong>Nivel:</strong> ${a.titulo} | <strong>Hora:</strong> ${a.fecha}</p>
-      <p><em>Remitente original oculto por privacidad (HU-020).</em></p>
+      <p class="alerta-privacidad">Remitente original oculto por privacidad (HU-020).</p>
       <p>"${a.texto}"</p>
       ${a.estado === 'Pendiente' ? `
         <div class="alerta-acciones">
@@ -281,8 +302,19 @@ detallesFaq.forEach(item => {
 });
 
 const modalPolitica = document.getElementById('modalPolitica');
-document.getElementById('btnPolitica').addEventListener('click', () => modalPolitica.classList.remove('oculto'));
-document.getElementById('btnCerrarPolitica').addEventListener('click', () => modalPolitica.classList.add('oculto'));
+const btnCerrarPolitica = document.getElementById('btnCerrarPolitica');
+document.getElementById('btnPolitica').addEventListener('click', () => abrirModal(modalPolitica, btnCerrarPolitica));
+btnCerrarPolitica.addEventListener('click', () => cerrarModal(modalPolitica));
+modalPolitica.addEventListener('click', (e) => {
+  if (e.target === modalPolitica) cerrarModal(modalPolitica);
+});
+
+// Tecla Escape cierra modales no críticos (mantiene modalEnlace bloqueado por HU-013 CA02)
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  if (!modalPolitica.classList.contains('oculto')) cerrarModal(modalPolitica);
+  if (!modalEliminar.classList.contains('oculto')) cerrarModal(modalEliminar);
+});
 
 // ---------- 7. FORMULARIO DE CONTACTO (HU-034) ----------
 const contactoForm = document.getElementById('contactoForm');
@@ -296,23 +328,19 @@ contactoForm.addEventListener('submit', (e) => {
   const mensaje = document.getElementById('mensaje').value.trim();
 
   if (!nombre || !correo || !celular || !mensaje) {
-    contactoMensaje.textContent = 'Por favor completa todos los campos obligatorios.';
-    contactoMensaje.style.color = '#D32F2F';
+    mostrarEstado(contactoMensaje, 'Por favor completa todos los campos obligatorios.', 'error');
     return;
   }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-    contactoMensaje.textContent = 'Ingresa un correo electrónico válido.';
-    contactoMensaje.style.color = '#D32F2F';
+    mostrarEstado(contactoMensaje, 'Ingresa un correo electrónico válido.', 'error');
     return;
   }
   if (!/^\d{9}$/.test(celular)) {
-    contactoMensaje.textContent = 'Ingresa un número de celular de 9 dígitos.';
-    contactoMensaje.style.color = '#D32F2F';
+    mostrarEstado(contactoMensaje, 'Ingresa un número de celular de 9 dígitos.', 'error');
     return;
   }
 
-  contactoMensaje.textContent = '¡Solicitud enviada con éxito! Nos pondremos en contacto contigo pronto.';
-  contactoMensaje.style.color = '#388E3C';
+  mostrarEstado(contactoMensaje, '¡Solicitud enviada con éxito! Nos pondremos en contacto contigo pronto.', 'ok');
   contactoForm.reset();
 });
 
@@ -327,22 +355,19 @@ newsletterForm.addEventListener('submit', (e) => {
   const correo = newsletterEmail.value.trim().toLowerCase();
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) {
-    newsletterMensaje.textContent = 'Correo inválido.';
-    newsletterMensaje.style.color = '#D32F2F';
+    mostrarEstado(newsletterMensaje, 'Correo inválido.', 'error');
     return;
   }
   if (suscritos.has(correo)) {
-    newsletterMensaje.textContent = 'Este correo ya está registrado en el boletín.';
-    newsletterMensaje.style.color = '#F57C00';
+    mostrarEstado(newsletterMensaje, 'Este correo ya está registrado en el boletín.', 'aviso');
     return;
   }
 
   suscritos.add(correo);
-  newsletterMensaje.textContent = 'Suscripción exitosa al boletín preventivo.';
-  newsletterMensaje.style.color = '#388E3C';
+  mostrarEstado(newsletterMensaje, 'Suscripción exitosa al boletín preventivo.', 'ok');
   newsletterForm.reset();
 
   setTimeout(() => {
-    newsletterMensaje.textContent = '';
+    mostrarEstado(newsletterMensaje, '', '');
   }, 5000);
 });

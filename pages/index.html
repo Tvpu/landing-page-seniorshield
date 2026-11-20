@@ -11,7 +11,7 @@
   <!-- ENCABEZADO FIJO (HU-032, HU-039, HU-026) -->
   <header class="site-header" id="inicio">
     <a href="#inicio" class="brand">
-      <img src="images/logo.jpg" alt="Logotipo SeniorShield">
+      <img src="../pages/images/logo.jpg" alt="Logotipo SeniorShield">
     </a>
 
     <div class="header-actions">
@@ -36,58 +36,59 @@
 
   <main>
 
-    <!-- 1. HERO + REGISTRO INICIAL (HU-001, HU-003, HU-032) -->
-    <section class="hero" aria-labelledby="titulo-inicio">
-      <div class="hero-texto">
-        <span class="eyebrow">SEGURIDAD DIGITAL PARA TU FAMILIA · ODS 16</span>
-        <h1 id="titulo-inicio">Protege a quienes más quieres de las estafas digitales</h1>
-        <p>
-          SeniorShield ayuda a los adultos mayores a identificar mensajes sospechosos en WhatsApp y SMS sin salir de la conversación, con un semáforo visual claro y respaldo familiar en un toque.
-        </p>
-        <div class="hero-botones">
-          <a href="#simulador" class="btn btn-primario">Probar simulador</a>
-          <a href="#descarga" class="btn btn-secundario">Descargar app</a>
+    <!-- 1. HERO FULL-WIDTH CON IMAGEN DE FONDO + FORMULARIO SUPERPUESTO (HU-001, HU-003, HU-032) -->
+    <section class="hero-banner" aria-labelledby="titulo-inicio">
+      <div class="contenedor hero-grid">
+        <div class="hero-texto">
+          <span class="eyebrow">SEGURIDAD DIGITAL PARA TU FAMILIA · ODS 16</span>
+          <h1 id="titulo-inicio">Protege a quienes más quieres de las estafas digitales</h1>
+          <p class="hero-descripcion">
+            SeniorShield ayuda a los adultos mayores a identificar mensajes sospechosos en WhatsApp y SMS sin salir de la conversación, con un semáforo visual claro y respaldo familiar en un toque.
+          </p>
+          <div class="hero-botones">
+            <a href="#simulador" class="btn btn-hero-primario">Probar simulador</a>
+            <a href="#descarga" class="btn btn-hero-secundario">Descargar app</a>
+          </div>
         </div>
-        <img src="images/proyecto.jpg" alt="Ilustración de SeniorShield conectando a adultos mayores, familias y entidades seguras" class="hero-img">
-      </div>
 
-      <!-- Formulario obligatorio de registro de usuarios al inicio -->
-      <div class="registro-card" aria-labelledby="titulo-registro">
-        <h2 id="titulo-registro">Crea tu cuenta gratuita</h2>
-        <p class="registro-sub">Empieza a proteger a tu familia en menos de 2 minutos.</p>
+        <!-- Formulario superpuesto a la derecha -->
+        <div class="registro-card" aria-labelledby="titulo-registro">
+          <h2 id="titulo-registro">Crea tu cuenta gratuita</h2>
+          <p class="registro-sub">Empieza a proteger a tu familia en menos de 2 minutos.</p>
 
-        <form id="registroForm" novalidate>
-          <div class="campo">
-            <label for="regNombre">Nombre completo *</label>
-            <input type="text" id="regNombre" name="regNombre" placeholder="Ej: Jorge Ramírez" required>
-          </div>
+          <form id="registroForm" novalidate>
+            <div class="campo">
+              <label for="regNombre">Nombre completo *</label>
+              <input type="text" id="regNombre" name="regNombre" placeholder="Ej: Jorge Ramírez" required>
+            </div>
 
-          <div class="campo">
-            <label for="regCorreo">Correo electrónico *</label>
-            <input type="email" id="regCorreo" name="regCorreo" placeholder="correo@ejemplo.com" required>
-          </div>
+            <div class="campo">
+              <label for="regCorreo">Correo electrónico *</label>
+              <input type="email" id="regCorreo" name="regCorreo" placeholder="correo@ejemplo.com" required>
+            </div>
 
-          <div class="campo">
-            <label for="regCelular">Número de celular (9 dígitos) *</label>
-            <input type="tel" id="regCelular" name="regCelular" placeholder="987654321" maxlength="9" required>
-          </div>
+            <div class="campo">
+              <label for="regCelular">Número de celular (9 dígitos) *</label>
+              <input type="tel" id="regCelular" name="regCelular" placeholder="987654321" maxlength="9" required>
+            </div>
 
-          <div class="campo">
-            <label for="regRol">Tipo de usuario *</label>
-            <select id="regRol" name="regRol" required>
-              <option value="adulto">Adulto Mayor (Usuario final)</option>
-              <option value="familiar">Familiar Directo (Supervisor)</option>
-            </select>
-          </div>
+            <div class="campo">
+              <label for="regRol">Tipo de usuario *</label>
+              <select id="regRol" name="regRol" required>
+                <option value="adulto">Adulto Mayor (Usuario final)</option>
+                <option value="familiar">Familiar Directo (Supervisor)</option>
+              </select>
+            </div>
 
-          <div class="campo">
-            <label for="regPassword">Contraseña (mín. 6 caracteres) *</label>
-            <input type="password" id="regPassword" name="regPassword" placeholder="••••••" required>
-          </div>
+            <div class="campo">
+              <label for="regPassword">Contraseña (mín. 6 caracteres) *</label>
+              <input type="password" id="regPassword" name="regPassword" placeholder="••••••" required>
+            </div>
 
-          <button type="submit" class="btn btn-primario btn-full">Registrarme</button>
-          <p id="registroMensaje" class="mensaje-estado" role="status" aria-live="polite"></p>
-        </form>
+            <button type="submit" class="btn btn-primario btn-full">Registrarme</button>
+            <p id="registroMensaje" class="mensaje-estado" role="status" aria-live="polite"></p>
+          </form>
+        </div>
       </div>
     </section>
 
@@ -95,7 +96,7 @@
     <section id="nosotros" class="seccion seccion-clara">
       <div class="contenedor grid-2">
         <div class="nosotros-img">
-          <img src="images/servicios.jpg" alt="Familiar acompañando a un adulto mayor usando SeniorShield en su celular">
+          <img src="../pages/images/servicios.jpg" alt="Familiar acompañando a un adulto mayor usando SeniorShield en su celular">
         </div>
         <div>
           <h2>¿Por qué SeniorShield?</h2>
@@ -109,23 +110,21 @@
       </div>
     </section>
 
-    <!-- 3. SIMULADOR INTERACTIVO CON MARCO DE CELULAR -->
+    <!-- 3. SIMULADOR INTERACTIVO CON MARCO DE CELULAR (HU-009 a HU-024, HU-031, HU-033) -->
     <section id="simulador" class="seccion">
       <div class="contenedor">
         <h2 class="texto-centro">Simulador interactivo de SeniorShield</h2>
         <p class="subtitulo texto-centro">Elige un modo arriba para probar la app del adulto mayor o la del familiar supervisor.</p>
 
-        <!-- Selector afuera del celular -->
-        <div class="tabs-externas" role="tablist">
-          <button type="button" class="tab-btn activo" data-tab="panel-adulto" role="tab" aria-selected="true">
+        <div class="tabs-externas" role="tablist" aria-label="Modos del simulador">
+          <button type="button" id="tab-adulto" class="tab-btn activo" data-tab="panel-adulto" role="tab" aria-selected="true" aria-controls="panel-adulto">
             Modo Adulto Mayor
           </button>
-          <button type="button" class="tab-btn" data-tab="panel-supervisor" role="tab" aria-selected="false">
+          <button type="button" id="tab-supervisor" class="tab-btn" data-tab="panel-supervisor" role="tab" aria-selected="false" aria-controls="panel-supervisor">
             Modo Supervisor <span id="badgeAlertas" class="badge oculto">0</span>
           </button>
         </div>
 
-        <!-- Marco del celular -->
         <div class="celular-mockup">
           <div class="celular-barra" aria-hidden="true">
             <span class="celular-parlante"></span>
@@ -133,7 +132,7 @@
 
           <div class="celular-pantalla" id="celularPantalla">
             <!-- PANEL A: ADULTO MAYOR -->
-            <div id="panel-adulto" class="tab-panel activo">
+            <div id="panel-adulto" class="tab-panel activo" role="tabpanel" aria-labelledby="tab-adulto">
               <div class="ejemplos-rapidos">
                 <span class="ejemplos-titulo">Ejemplos en 1 clic:</span>
                 <div class="ejemplos-lista">
@@ -164,7 +163,7 @@
                   </div>
                 </form>
 
-                <p id="estadoCarga" class="estado-carga oculto">⏳ Analizando mensaje...</p>
+                <p id="estadoCarga" class="estado-carga oculto" role="status" aria-live="polite">⏳ Analizando mensaje...</p>
 
                 <div id="tarjetaDiagnostico" class="tarjeta-diagnostico oculto" aria-live="polite">
                   <div class="diag-header">
@@ -184,10 +183,10 @@
                       ¿Nos equivocamos? Reportar
                     </button>
                   </div>
-                  <p id="diagFeedback" class="mensaje-estado"></p>
+                  <p id="diagFeedback" class="mensaje-estado" role="status" aria-live="polite"></p>
                 </div>
 
-                <div id="respuestaFamiliarBox" class="respuesta-familiar oculto"></div>
+                <div id="respuestaFamiliarBox" class="respuesta-familiar oculto" role="status" aria-live="polite"></div>
               </div>
 
               <div class="bloque-extra">
@@ -199,12 +198,13 @@
             </div>
 
             <!-- PANEL B: FAMILIAR SUPERVISOR -->
-            <div id="panel-supervisor" class="tab-panel">
+            <div id="panel-supervisor" class="tab-panel" role="tabpanel" aria-labelledby="tab-supervisor">
               <div class="supervisor-controles">
                 <label class="checkbox-label">
                   <input type="checkbox" id="filtroSoloRojo">
                   Solo Riesgo Alto
                 </label>
+                <label for="buscadorIncidentes" class="sr-only">Buscar incidentes por palabra clave</label>
                 <input type="search" id="buscadorIncidentes" placeholder="Buscar (ej: banco, paquete)...">
               </div>
 
@@ -224,12 +224,50 @@
           <h2>Descarga SeniorShield</h2>
           <p>Disponible para dispositivos Android y iOS. Instala la app en el celular de tu familiar y la versión Supervisor en el tuyo.</p>
           <div class="botones-tiendas">
-            <a href="#registroForm" class="btn btn-tienda">▶ Google Play</a>
-            <a href="#registroForm" class="btn btn-tienda"> App Store</a>
+            <a href="#registroForm" class="btn btn-tienda" aria-label="Descargar en Google Play">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M3 2.5v19l15.5-9.5L3 2.5zm17.1 8.5l-2.6 1.6 2.6 1.6c.7-.4.7-2.8 0-3.2z"/>
+              </svg>
+              Google Play
+            </a>
+            <a href="#registroForm" class="btn btn-tienda" aria-label="Descargar en App Store">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83zM15.97 6.33c.64-.78 1.08-1.86.96-2.94-.93.04-2.06.62-2.72 1.4-.58.68-1.1 1.78-.96 2.84 1.04.08 2.09-.52 2.72-1.3z"/>
+              </svg>
+              App Store
+            </a>
           </div>
         </div>
         <div class="qr-desktop" aria-label="Código QR de descarga para escritorio">
-          <div class="qr-box">QR</div>
+          <div class="qr-box">
+            <svg viewBox="0 0 100 100" width="120" height="120" role="img" aria-label="Código QR para descargar SeniorShield">
+              <rect width="100" height="100" fill="#FFFFFF"/>
+              <g fill="#1A365D">
+                <rect x="6" y="6" width="28" height="28"/>
+                <rect x="12" y="12" width="16" height="16" fill="#FFFFFF"/>
+                <rect x="16" y="16" width="8" height="8"/>
+                <rect x="66" y="6" width="28" height="28"/>
+                <rect x="72" y="12" width="16" height="16" fill="#FFFFFF"/>
+                <rect x="76" y="16" width="8" height="8"/>
+                <rect x="6" y="66" width="28" height="28"/>
+                <rect x="12" y="72" width="16" height="16" fill="#FFFFFF"/>
+                <rect x="16" y="76" width="8" height="8"/>
+                <rect x="42" y="10" width="8" height="8"/>
+                <rect x="52" y="18" width="8" height="8"/>
+                <rect x="42" y="28" width="14" height="8"/>
+                <rect x="10" y="42" width="14" height="8"/>
+                <rect x="30" y="42" width="16" height="16"/>
+                <rect x="52" y="42" width="10" height="10"/>
+                <rect x="68" y="42" width="22" height="8"/>
+                <rect x="14" y="54" width="10" height="8"/>
+                <rect x="52" y="58" width="14" height="10"/>
+                <rect x="72" y="56" width="16" height="12"/>
+                <rect x="42" y="70" width="10" height="20"/>
+                <rect x="58" y="74" width="14" height="14"/>
+                <rect x="78" y="74" width="12" height="16"/>
+              </g>
+            </svg>
+          </div>
           <p>Escanea con tu celular para descargar directamente</p>
         </div>
       </div>
@@ -239,11 +277,12 @@
     <section id="instalacion" class="seccion seccion-clara">
       <div class="contenedor">
         <h2>Asistencia en instalación</h2>
-        <p class="subtitulo">Mira el tutorial o sigue la guía rápida paso a paso.</p>
+        <p class="subtitulo">Mira el tutorial con subtítulos o sigue la guía rápida paso a paso.</p>
 
         <div class="video-contenedor">
           <video controls preload="metadata" poster="images/servicios.jpg">
-            <source src="video/tutorial.mp4" type="video/mp4">
+            <source src="../pages/images/video" type="video/mp4">
+            <track kind="subtitles" srclang="es" label="Español" src="../pages/images/subtitulos.vtt" default>
             Tu navegador no soporta la reproducción de video. Revisa la guía paso a paso debajo.
           </video>
         </div>
@@ -346,7 +385,7 @@
   <footer class="site-footer">
     <div class="contenedor footer-grid">
       <div>
-        <img src="images/logo.jpg" alt="Logotipo SeniorShield" class="footer-logo">
+        <img src="../pages/images/logo.jpg" alt="Logotipo SeniorShield" class="footer-logo">
         <p>Justicia, paz y seguridad digital frente al cibercrimen (ODS 16).</p>
         <p>Correo: contacto@seniorshield.org</p>
       </div>
@@ -373,7 +412,7 @@
     </div>
   </footer>
 
-  <!-- MODAL BARRERA CONTRA ENLACES PELIGROSOS (HU-013) -->
+  <!-- MODAL BARRERA CONTRA ENLACES PELIGROSOS (HU-013: no cierra haciendo clic fuera) -->
   <div id="modalEnlace" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="modalEnlaceTitulo">
     <div class="modal-contenido">
       <h3 id="modalEnlaceTitulo">¡Alto! Enlace potencialmente peligroso</h3>
@@ -381,6 +420,18 @@
       <div class="modal-acciones">
         <button type="button" id="btnCancelarEnlace" class="btn btn-primario">Cancelar (Recomendado)</button>
         <button type="button" id="btnEntiendoRiesgo" class="btn btn-peligro">Entiendo el riesgo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL CONFIRMACIÓN DE ELIMINACIÓN SEGURA (HU-014) -->
+  <div id="modalEliminar" class="modal oculto" role="dialog" aria-modal="true" aria-labelledby="modalEliminarTitulo">
+    <div class="modal-contenido">
+      <h3 id="modalEliminarTitulo">¿Está seguro de borrar este mensaje?</h3>
+      <p>El mensaje sospechoso será eliminado de la pantalla de forma segura.</p>
+      <div class="modal-acciones">
+        <button type="button" id="btnCancelarEliminar" class="btn btn-secundario">Cancelar</button>
+        <button type="button" id="btnConfirmarEliminar" class="btn btn-peligro">Sí, borrar mensaje</button>
       </div>
     </div>
   </div>
