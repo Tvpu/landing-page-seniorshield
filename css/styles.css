@@ -900,3 +900,15 @@ body.alto-contraste .estado-info { color: #FFD600; }
 body.alto-contraste .footer-bottom a {
   color: #FFD600;
 }
+
+
+body.alto-contraste .hero-texto,
+body.alto-contraste .hero-texto h1,
+body.alto-contraste .seccion-oscura h2 {
+  color: #FFFFFF;
+}
+
+body.alto-contraste .btn-peligro,
+body.alto-contraste .badge {
+  color: #FFFFFF;
+}
