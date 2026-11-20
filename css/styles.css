@@ -1,4 +1,4 @@
-/* ---------- Guía de Estilos Oficial (Regla 60-30-10) ---------- */
+/* ---------- Guía de Estilos (60-30-10) ---------- */
 :root {
   --fondo: #F8F9FA;        /* 60% Gris claro */
   --primario: #1A365D;     /* 30% Azul acero */
@@ -88,13 +88,12 @@ h3 { font-size: 22px; }
   white-space: nowrap;
 }
 
-/* Estados semánticos para JS */
 .estado-error { color: var(--rojo); }
 .estado-ok { color: var(--verde); }
 .estado-aviso { color: #B45309; }
 .estado-info { color: var(--primario); }
 
-/* ---------- Botones accesibles (HU-027: mín 48x48px, gap >= 8px) ---------- */
+/* ---------- Botones accesibles (HU-027) ---------- */
 .btn, button {
   min-height: 48px;
   min-width: 48px;
@@ -216,7 +215,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   border-radius: 8px;
 }
 
-/* ---------- Hero Full-Width con imagen de fondo y formulario superpuesto ---------- */
+/* ---------- Hero + Registro ---------- */
 .hero-banner {
   width: 100%;
   min-height: 620px;
@@ -352,7 +351,7 @@ input, textarea, select {
   border-radius: 12px;
 }
 
-/* ---------- Simulador con forma de celular ---------- */
+/* ---------- Simulador de app ---------- */
 .tabs-externas {
   display: flex;
   justify-content: center;
@@ -486,7 +485,7 @@ input, textarea, select {
   margin: 14px 0;
 }
 
-/* Tarjeta de diagnóstico (HU-011: mín 18px) */
+/* Tarjeta de diagnóstico (HU-011) */
 .tarjeta-diagnostico {
   margin-top: 18px;
   padding: 18px;
@@ -839,7 +838,7 @@ input, textarea, select {
   }
 }
 
-/* ---------- Modo Alto Contraste (HU-026) — Siempre al final para ganar por cascada ---------- */
+/* ---------- Modo Alto Contraste (HU-026) ---------- */
 body.alto-contraste {
   --fondo: #000000;
   --blanco: #111111;

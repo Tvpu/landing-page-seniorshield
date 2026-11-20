@@ -1,3 +1,5 @@
+
+
 // Utilidad para mensajes de estado accesibles (evita colores inline rotos en alto contraste)
 function mostrarEstado(elemento, texto, tipo) {
   elemento.textContent = texto;
@@ -5,7 +7,7 @@ function mostrarEstado(elemento, texto, tipo) {
   if (tipo) elemento.classList.add(`estado-${tipo}`);
 }
 
-// ---------- 1. MENÚ HAMBURGUESA (HU-039) Y ALTO CONTRASTE (HU-026) ----------
+// ---------- MENÚ HAMBURGUESA (HU-039) Y ALTO CONTRASTE (HU-026) ----------
 const btnMenu = document.getElementById('btnMenu');
 const navPrincipal = document.getElementById('navPrincipal');
 const btnContraste = document.getElementById('btnContraste');
@@ -27,7 +29,7 @@ btnContraste.addEventListener('click', () => {
   btnContraste.setAttribute('aria-pressed', activo);
 });
 
-// ---------- 2. REGISTRO DE USUARIOS EN HERO (HU-001, HU-003) ----------
+// ---------- REGISTRO DE USUARIOS EN HERO (HU-001, HU-003) ----------
 const registroForm = document.getElementById('registroForm');
 const registroMensaje = document.getElementById('registroMensaje');
 
@@ -151,7 +153,6 @@ function analizarMensaje(textoOriginal) {
   }, 400);
 }
 
-// Botones de ejemplo en 1 clic (HU-033)
 document.querySelectorAll('.btn-chip').forEach(btn => {
   btn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -186,7 +187,6 @@ function cerrarModal(modal) {
   if (focoPrevio) focoPrevio.focus();
 }
 
-// Barrera contra enlaces rojos (HU-013: requiere clic explícito, no cierra por fuera)
 const modalEnlace = document.getElementById('modalEnlace');
 const btnCancelarEnlace = document.getElementById('btnCancelarEnlace');
 btnSimularLink.addEventListener('click', () => abrirModal(modalEnlace, btnCancelarEnlace));
@@ -196,7 +196,6 @@ document.getElementById('btnEntiendoRiesgo').addEventListener('click', () => {
   mostrarEstado(diagFeedback, 'Confirmación manual registrada. Recuerda nunca ingresar claves.', 'aviso');
 });
 
-// Eliminación segura con modal accesible (HU-014)
 const modalEliminar = document.getElementById('modalEliminar');
 const btnCancelarEliminar = document.getElementById('btnCancelarEliminar');
 document.getElementById('btnEliminarSeguro').addEventListener('click', () => {
@@ -212,12 +211,11 @@ document.getElementById('btnConfirmarEliminar').addEventListener('click', () => 
   respuestaFamiliarBox.classList.remove('oculto');
 });
 
-// Reportar falso positivo (HU-031)
 document.getElementById('btnReportarFalso').addEventListener('click', () => {
   mostrarEstado(diagFeedback, 'Gracias por tu reporte anónimo. Ayudarás a mejorar el sistema.', 'ok');
 });
 
-// ---------- 5. MODO FAMILIAR SUPERVISOR (HU-018 a HU-024) ----------
+// ---------- MODO FAMILIAR SUPERVISOR (HU-018 - HU-024) ----------
 const badgeAlertas = document.getElementById('badgeAlertas');
 const listaAlertasSupervisor = document.getElementById('listaAlertasSupervisor');
 const filtroSoloRojo = document.getElementById('filtroSoloRojo');
@@ -289,7 +287,7 @@ listaAlertasSupervisor.addEventListener('click', (e) => {
 filtroSoloRojo.addEventListener('change', renderAlertasSupervisor);
 buscadorIncidentes.addEventListener('input', renderAlertasSupervisor);
 
-// ---------- 6. FAQ ACORDEÓN EXCLUSIVO Y POLÍTICA (HU-037) ----------
+// ---------- FAQ Y POLÍTICA (HU-037) ----------
 const detallesFaq = document.querySelectorAll('.faq-lista details');
 detallesFaq.forEach(item => {
   item.addEventListener('toggle', () => {
@@ -309,14 +307,13 @@ modalPolitica.addEventListener('click', (e) => {
   if (e.target === modalPolitica) cerrarModal(modalPolitica);
 });
 
-// Tecla Escape cierra modales no críticos (mantiene modalEnlace bloqueado por HU-013 CA02)
 document.addEventListener('keydown', (e) => {
   if (e.key !== 'Escape') return;
   if (!modalPolitica.classList.contains('oculto')) cerrarModal(modalPolitica);
   if (!modalEliminar.classList.contains('oculto')) cerrarModal(modalEliminar);
 });
 
-// ---------- 7. FORMULARIO DE CONTACTO (HU-034) ----------
+// ---------- FORMULARIO DE CONTACTO (HU-034) ----------
 const contactoForm = document.getElementById('contactoForm');
 const contactoMensaje = document.getElementById('contactoMensaje');
 
@@ -344,7 +341,7 @@ contactoForm.addEventListener('submit', (e) => {
   contactoForm.reset();
 });
 
-// ---------- 8. BOLETÍN EDUCATIVO CON CONTROL DE DUPLICADOS (HU-038) ----------
+// ---------- BOLETÍN EDUCATIVO (HU-038) ----------
 const newsletterForm = document.getElementById('newsletterForm');
 const newsletterEmail = document.getElementById('newsletterEmail');
 const newsletterMensaje = document.getElementById('newsletterMensaje');
