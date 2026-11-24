@@ -25,7 +25,7 @@
 
     <nav id="navPrincipal" class="nav-principal" aria-label="Navegación principal">
       <a href="#nosotros">Sobre nosotros</a>
-      <a href="#simulador">Simulador</a>
+      <a href="#simulador" class="nav-simulador">Simulador</a>
       <a href="#descarga">Descargar</a>
       <a href="#instalacion">Instalación</a>
       <a href="#testimonios">Testimonios</a>
@@ -46,7 +46,7 @@
             SeniorShield ayuda a los adultos mayores a identificar mensajes sospechosos en WhatsApp y SMS sin salir de la conversación, con un semáforo visual claro y respaldo familiar en un toque.
           </p>
           <div class="hero-botones">
-            <a href="#simulador" class="btn btn-hero-primario">Probar simulador</a>
+            <a href="#simulador" class="btn btn-hero-primario">Probar simulador ahora</a>
             <a href="#descarga" class="btn btn-hero-secundario">Descargar app</a>
           </div>
         </div>
@@ -113,8 +113,11 @@
     <!-- SIMULADOR INTERACTIVO (HU-009 - HU-024, HU-031, HU-033) -->
     <section id="simulador" class="seccion">
       <div class="contenedor">
+        <p class="texto-centro"><span class="eyebrow">PRUEBA INTERACTIVA EN VIVO</span></p>
         <h2 class="texto-centro">Simulador interactivo de SeniorShield</h2>
-        <p class="subtitulo texto-centro">Elige un modo arriba para probar la app del adulto mayor o la del familiar supervisor.</p>
+        <p class="subtitulo texto-centro">
+          Elige un modo debajo. Para analizar un texto: <strong>1)</strong> escribe o pega el mensaje (o elige un ejemplo rápido) y <strong>2)</strong> pulsa <strong>"Analizar con burbuja"</strong>.
+        </p>
 
         <div class="tabs-externas" role="tablist" aria-label="Modos del simulador">
           <button type="button" id="tab-adulto" class="tab-btn activo" data-tab="panel-adulto" role="tab" aria-selected="true" aria-controls="panel-adulto">
@@ -134,7 +137,7 @@
             <!-- PANEL A: ADULTO MAYOR -->
             <div id="panel-adulto" class="tab-panel activo" role="tabpanel" aria-labelledby="tab-adulto">
               <div class="ejemplos-rapidos">
-                <span class="ejemplos-titulo">Ejemplos en 1 clic:</span>
+                <span class="ejemplos-titulo">Prueba rápida (ejemplos en 1 clic):</span>
                 <div class="ejemplos-lista">
                   <button type="button" class="btn-chip" data-ejemplo="URGENTE: Tu cuenta bancaria será bloqueada hoy. Ingresa tus claves en http://banco-seguro-falso.com">
                     SMS falso (Rojo)
@@ -150,8 +153,8 @@
 
               <div class="chat-simulado">
                 <form id="simuladorForm">
-                  <label for="mensajeInput">Mensaje recibido:</label>
-                  <textarea id="mensajeInput" rows="3" placeholder="Pega un mensaje o elige un ejemplo..." required></textarea>
+                  <label for="mensajeInput">Paso 1: Escribe o pega aquí el mensaje a analizar:</label>
+                  <textarea id="mensajeInput" rows="3" placeholder="Pega aquí el mensaje sospechoso que quieras revisar (o toca un ejemplo arriba)..." required></textarea>
 
                   <div class="chat-controles">
                     <button type="submit" id="btnBurbuja" class="btn-burbuja btn-full">
@@ -163,7 +166,7 @@
                   </div>
                 </form>
 
-                <p id="estadoCarga" class="estado-carga oculto" role="status" aria-live="polite">⏳ Analizando mensaje...</p>
+                <p id="estadoCarga" class="estado-carga oculto" role="status" aria-live="polite">⏳ Analizando el mensaje...</p>
 
                 <div id="tarjetaDiagnostico" class="tarjeta-diagnostico oculto" aria-live="polite">
                   <div class="diag-header">
@@ -200,9 +203,9 @@
             <!-- PANEL B: FAMILIAR SUPERVISOR -->
             <div id="panel-supervisor" class="tab-panel" role="tabpanel" aria-labelledby="tab-supervisor">
               <div class="supervisor-controles">
-                <label class="checkbox-label">
+                <label class="checkbox-label" for="filtroSoloRojo">
                   <input type="checkbox" id="filtroSoloRojo">
-                  Solo Riesgo Alto
+                  <span>Solo Riesgo Alto</span>
                 </label>
                 <label for="buscadorIncidentes" class="sr-only">Buscar incidentes por palabra clave</label>
                 <input type="search" id="buscadorIncidentes" placeholder="Buscar (ej: banco, paquete)...">

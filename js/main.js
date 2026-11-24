@@ -1,10 +1,17 @@
-
-
 // Utilidad para mensajes de estado accesibles (evita colores inline rotos en alto contraste)
 function mostrarEstado(elemento, texto, tipo) {
   elemento.textContent = texto;
   elemento.classList.remove('estado-error', 'estado-ok', 'estado-aviso', 'estado-info');
   if (tipo) elemento.classList.add(`estado-${tipo}`);
+}
+
+function escaparHtml(texto) {
+  return texto
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 // ---------- MENÚ HAMBURGUESA (HU-039) Y ALTO CONTRASTE (HU-026) ----------
@@ -52,7 +59,7 @@ registroForm.addEventListener('submit', (e) => {
     return;
   }
   if (!celularValido) {
-    mostrarEstado(registroMensaje, 'El celular debe tener exactamente 9 dígitos numéricos.', 'error');
+    mostrarEstado(registroMensaje, 'El número telefónico debe tener 9 dígitos.', 'error');
     return;
   }
   if (password.length < 6) {
@@ -112,17 +119,19 @@ function analizarMensaje(textoOriginal) {
     estadoCarga.classList.add('oculto');
     const msg = textoOriginal.toLowerCase();
 
-    const urgencia = /urgente|bloqueada|suspendida|claves|contraseña|verificar tus datos/.test(msg);
-    const premios = /ganaste|premio|regalamos dinero|oferta/.test(msg);
-    const paquetes = /paquete retenido|aduanas|entrega fallida/.test(msg);
-    const enlace = /http|www\.|\.com|bit\.ly|link|enlace/.test(msg);
+    // Corrección PA-06 (HU-010): separar señales críticas (urgencia/robo de claves/premios)
+    // de señales de precaución (paquetería o enlaces acortados sin pedido explícito de claves)
+    const urgencia = /urgente|bloqueada|suspendida|claves|contraseña|verificar tus datos|cuenta bancaria|tarjeta|paga ahora/.test(msg);
+    const premios = /ganaste|premio|regalamos dinero/.test(msg);
+    const paquetes = /paquete|aduanas|entrega fallida|envío/.test(msg);
+    const enlace = /http|www\.|\.com|\.net|\.pe|bit\.ly|tinyurl|link|enlace/.test(msg);
 
     let nivel = 'verde';
     let icono = '✅';
     let titulo = 'Seguro';
     let explicacion = 'No encontramos señales de engaño en este mensaje. Igual mantén precaución si no conoces al remitente.';
 
-    if ((urgencia || premios || paquetes) && enlace) {
+    if ((urgencia || premios) && enlace) {
       nivel = 'rojo';
       icono = '🛑';
       titulo = 'Riesgo Alto';
@@ -131,7 +140,7 @@ function analizarMensaje(textoOriginal) {
       nivel = 'ambar';
       icono = '⚠️';
       titulo = 'Precaución';
-      explicacion = 'Este mensaje contiene un enlace externo o una promesa dudosa. Verifica directamente en la página oficial antes de responder.';
+      explicacion = 'Este mensaje contiene un enlace dudoso o un aviso que podría no pertenecer a una entidad oficial. Verifica directamente en la página oficial antes de responder.';
     }
 
     tarjetaDiag.className = `tarjeta-diagnostico riesgo-${nivel}`;
@@ -140,16 +149,32 @@ function analizarMensaje(textoOriginal) {
     diagExplicacion.textContent = explicacion;
     btnSimularLink.classList.toggle('oculto', nivel !== 'rojo');
 
+    // HU-015: guardar fecha y hora completas junto con el nivel e ícono
+    const ahora = new Date();
+    const fecha = ahora.toLocaleDateString('es-PE', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric'
+    });
+    const hora = ahora.toLocaleTimeString('es-PE', {
+      hour: '2-digit',
+      minute: '2-digit'
+    });
+
     ultimoDiagnostico = {
       id: Date.now(),
       texto: textoOriginal,
       nivel,
+      icono,
       titulo,
-      fecha: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+      fechaHora: `${fecha} ${hora}`
     };
 
     historialAdulto.unshift(ultimoDiagnostico);
     renderHistorialAdulto();
+
+    // Mejora SUS: enfocar visualmente el diagnóstico y sus botones de acción
+    tarjetaDiag.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 400);
 }
 
@@ -167,10 +192,22 @@ simuladorForm.addEventListener('submit', (e) => {
   analizarMensaje(mensajeInput.value.trim());
 });
 
+// Corrección PA-11 (HU-015): muestra color de semáforo, ícono, fecha/hora y fragmento
 function renderHistorialAdulto() {
-  listaHistorialAdulto.innerHTML = historialAdulto.slice(0, 10).map(item => `
-    <li><strong>[${item.titulo.toUpperCase()} - ${item.fecha}]</strong> ${item.texto.slice(0, 90)}</li>
-  `).join('');
+  listaHistorialAdulto.innerHTML = historialAdulto.slice(0, 10).map(item => {
+    const fragmento = escaparHtml(item.texto.slice(0, 90)) + (item.texto.length > 90 ? '...' : '');
+    return `
+      <li class="historial-item historial-${item.nivel}">
+        <div class="historial-meta">
+          <span class="historial-badge badge-${item.nivel}">
+            <span aria-hidden="true">${item.icono}</span> ${item.titulo}
+          </span>
+          <span class="historial-fecha">${item.fechaHora}</span>
+        </div>
+        <p class="historial-texto">${fragmento}</p>
+      </li>
+    `;
+  }).join('');
 }
 
 // ---------- MODALES ACCESIBLES (HU-013, HU-014, HU-037) ----------
@@ -254,15 +291,15 @@ function renderAlertasSupervisor() {
 
   listaAlertasSupervisor.innerHTML = filtradas.map(a => `
     <div class="alerta-item ${a.nivel === 'rojo' ? 'critica' : ''}">
-      <p><strong>Estado:</strong> ${a.estado} | <strong>Nivel:</strong> ${a.titulo} | <strong>Hora:</strong> ${a.fecha}</p>
+      <p><strong>Estado:</strong> ${a.estado} | <strong>Nivel:</strong> ${a.titulo} | <strong>Fecha y hora:</strong> ${a.fechaHora}</p>
       <p class="alerta-privacidad">Remitente original oculto por privacidad (HU-020).</p>
-      <p>"${a.texto}"</p>
+      <p>"${escaparHtml(a.texto)}"</p>
       ${a.estado === 'Pendiente' ? `
         <div class="alerta-acciones">
           <button type="button" class="btn btn-peligro btn-full btn-responder" data-id="${a.id}" data-resp="Es estafa, bórralo">Es estafa, bórralo</button>
           <button type="button" class="btn btn-primario btn-full btn-responder" data-id="${a.id}" data-resp="Es seguro">Es seguro</button>
         </div>
-      ` : `<p><strong>Respuesta enviada:</strong> ${a.respuesta}</p>`}
+      ` : `<p><strong>Respuesta enviada:</strong> ${escaparHtml(a.respuesta)}</p>`}
     </div>
   `).join('');
 }

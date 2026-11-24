@@ -18,6 +18,10 @@
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -51,6 +55,7 @@ h3 { font-size: 22px; }
 
 .seccion {
   padding: 56px 0;
+  scroll-margin-top: 84px;
 }
 
 .seccion-clara {
@@ -191,7 +196,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .nav-principal {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
 }
 
@@ -200,12 +205,30 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
   text-decoration: none;
   font-size: 18px;
   font-weight: 700;
-  padding: 8px 6px;
+  min-height: 48px;
+  padding: 10px 8px;
+  display: inline-flex;
+  align-items: center;
 }
 
 .nav-principal a:hover {
   color: var(--primario);
   text-decoration: underline;
+}
+
+/* Destaca el acceso al simulador (mejora SUS) */
+.nav-principal .nav-simulador {
+  background: #EFF6FF;
+  color: var(--primario);
+  border: 2px solid var(--primario);
+  padding: 8px 14px;
+  border-radius: 8px;
+}
+
+.nav-principal .nav-simulador:hover {
+  background: var(--primario);
+  color: var(--blanco);
+  text-decoration: none;
 }
 
 .nav-principal .nav-cta {
@@ -275,6 +298,7 @@ a:focus-visible, button:focus-visible, input:focus-visible, textarea:focus-visib
 .btn-hero-primario {
   background: var(--blanco);
   color: var(--primario);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.22);
 }
 
 .btn-hero-primario:hover {
@@ -355,25 +379,29 @@ input, textarea, select {
 .tabs-externas {
   display: flex;
   justify-content: center;
-  gap: 32px;
+  gap: 16px;
   margin-bottom: 24px;
   flex-wrap: wrap;
 }
 
+/* Pestañas claramente identificables como botones (mejora SUS) */
 .tab-btn {
-  background: transparent;
-  color: var(--texto-suave);
-  border: none;
-  border-bottom: 3px solid transparent;
-  border-radius: 0;
-  padding: 10px;
-  font-size: 20px;
+  background: var(--blanco);
+  color: var(--primario);
+  border: 2px solid var(--borde);
+  border-radius: 10px;
+  padding: 12px 20px;
+  font-size: 19px;
+}
+
+.tab-btn:hover {
+  border-color: var(--primario);
 }
 
 .tab-btn.activo {
-  background: transparent;
-  color: var(--primario);
-  border-bottom-color: var(--primario);
+  background: var(--primario);
+  color: var(--blanco);
+  border-color: var(--primario);
 }
 
 .badge {
@@ -386,7 +414,7 @@ input, textarea, select {
 
 .celular-mockup {
   width: 100%;
-  max-width: 420px;
+  max-width: 440px;
   margin: 0 auto;
   background: #1E293B;
   border-radius: 36px;
@@ -460,6 +488,7 @@ input, textarea, select {
   font-weight: 700;
   font-size: 18px;
   margin-bottom: 6px;
+  color: var(--primario);
 }
 
 .chat-controles {
@@ -473,6 +502,7 @@ input, textarea, select {
   background: var(--primario);
   color: var(--blanco);
   border-radius: 999px;
+  box-shadow: 0 4px 12px rgba(26, 54, 93, 0.25);
 }
 
 .btn-burbuja:hover {
@@ -553,6 +583,7 @@ input, textarea, select {
   border-top: 2px solid var(--borde);
 }
 
+/* Historial reciente con semáforo visual y fecha/hora (PA-11 / HU-015) */
 .lista-historial {
   list-style: none;
   padding: 0;
@@ -564,13 +595,76 @@ input, textarea, select {
 
 .lista-historial li {
   padding: 12px;
-  border: 1px solid var(--borde);
+  border: 2px solid var(--borde);
   border-radius: 8px;
   background: var(--fondo);
   font-size: 18px;
 }
 
-/* Supervisor */
+.historial-item {
+  border-left-width: 8px !important;
+}
+
+.historial-rojo {
+  border-color: var(--rojo) !important;
+  background: #FEF2F2 !important;
+}
+
+.historial-ambar {
+  border-color: var(--ambar) !important;
+  background: #FFF7ED !important;
+}
+
+.historial-verde {
+  border-color: var(--verde) !important;
+  background: #F0FDF4 !important;
+}
+
+.historial-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.historial-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--blanco);
+}
+
+.badge-rojo {
+  background: var(--rojo);
+}
+
+.badge-ambar {
+  background: #C2410C;
+}
+
+.badge-verde {
+  background: var(--verde);
+}
+
+.historial-fecha {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--texto-suave);
+}
+
+.historial-texto {
+  margin: 0;
+  font-size: 17px;
+  word-break: break-word;
+}
+
+/* Supervisor + Checkbox accesible 48x48px (PA-19 / HU-027) */
 .supervisor-controles {
   display: flex;
   flex-direction: column;
@@ -582,13 +676,49 @@ input, textarea, select {
   display: flex;
   align-items: center;
   gap: 10px;
+  min-height: 48px;
+  padding: 4px 12px 4px 4px;
+  border: 2px solid var(--borde);
+  border-radius: 8px;
+  background: var(--fondo);
   font-weight: 700;
   font-size: 18px;
+  cursor: pointer;
 }
 
-.checkbox-label input {
-  width: 24px;
-  min-height: 24px;
+.checkbox-label input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.checkbox-label input[type="checkbox"]::before {
+  content: "";
+  width: 26px;
+  height: 26px;
+  border: 2px solid var(--primario);
+  border-radius: 6px;
+  background: var(--blanco);
+  display: block;
+}
+
+.checkbox-label input[type="checkbox"]:checked::before {
+  background-color: var(--primario);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23FFFFFF' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3.5 8.5 6.5 11.5 12.5 4.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 18px 18px;
 }
 
 .alerta-item {
@@ -707,6 +837,9 @@ input, textarea, select {
   font-weight: 700;
   cursor: pointer;
   color: var(--primario);
+  min-height: 48px;
+  display: flex;
+  align-items: center;
 }
 
 /* ---------- Contacto y Footer ---------- */
@@ -863,14 +996,17 @@ body.alto-contraste .btn-primario,
 body.alto-contraste .btn-burbuja,
 body.alto-contraste .nav-principal .nav-cta,
 body.alto-contraste .btn-tienda,
-body.alto-contraste .btn-hero-primario {
+body.alto-contraste .btn-hero-primario,
+body.alto-contraste .tab-btn.activo {
   background: #FFD600;
   color: #000000;
   border-color: #FFD600;
 }
 
 body.alto-contraste .btn-secundario,
-body.alto-contraste .btn-hero-secundario {
+body.alto-contraste .btn-hero-secundario,
+body.alto-contraste .nav-principal .nav-simulador,
+body.alto-contraste .tab-btn {
   background: #000000;
   color: #FFD600;
   border-color: #FFD600;
@@ -887,9 +1023,28 @@ body.alto-contraste .tarjeta-diagnostico,
 body.alto-contraste .tarjeta-diagnostico.riesgo-rojo,
 body.alto-contraste .tarjeta-diagnostico.riesgo-ambar,
 body.alto-contraste .tarjeta-diagnostico.riesgo-verde,
-body.alto-contraste .respuesta-familiar {
-  background: #1A1A1A;
+body.alto-contraste .respuesta-familiar,
+body.alto-contraste .historial-item,
+body.alto-contraste .historial-rojo,
+body.alto-contraste .historial-ambar,
+body.alto-contraste .historial-verde {
+  background: #1A1A1A !important;
   color: #FFFFFF;
+}
+
+body.alto-contraste .checkbox-label {
+  background: #1A1A1A;
+  border-color: #FFFFFF;
+}
+
+body.alto-contraste .checkbox-label input[type="checkbox"]::before {
+  border-color: #FFD600;
+  background-color: #000000;
+}
+
+body.alto-contraste .checkbox-label input[type="checkbox"]:checked::before {
+  background-color: #FFD600;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%23000000' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='3.5 8.5 6.5 11.5 12.5 4.5'/%3E%3C/svg%3E");
 }
 
 body.alto-contraste .estado-error { color: #FF6B6B; }
@@ -900,7 +1055,6 @@ body.alto-contraste .estado-info { color: #FFD600; }
 body.alto-contraste .footer-bottom a {
   color: #FFD600;
 }
-
 
 body.alto-contraste .hero-texto,
 body.alto-contraste .hero-texto h1,
